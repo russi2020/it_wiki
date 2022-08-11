@@ -5,6 +5,7 @@ import (
 	"github.com/gorilla/mux"
 	"it_wiki/app"
 	"it_wiki/controllers"
+	"log"
 	"net/http"
 	"os"
 )
@@ -18,7 +19,7 @@ func main() {
 		port = "8000" //localhost
 	}
 
-	fmt.Println(port)
+	fmt.Printf("Starting on port %s\n", port)
 
 	router.HandleFunc("/api/user/new", controllers.CreateAccount).Methods("POST")
 	router.HandleFunc("/api/user/login", controllers.Authenticate).Methods("POST")
@@ -51,6 +52,6 @@ func main() {
 	err := http.ListenAndServe(":"+port, router) //Запустите приложение, посетите localhost:8000/api
 
 	if err != nil {
-		fmt.Print(err)
+		log.Println(err)
 	}
 }

@@ -1,0 +1,26 @@
+version: '3.6'
+
+services:
+
+  it_wiki:
+    env_file: .env
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/it_wiki
+    restart: on-failure
+    environment:
+      DATABASE_URL: postgresql://${DB_USER}:${DB_PASS}@${DB_HOST}:${DB_PORT}/${DB_NAME}
+      DEBUG: ${DEBUG}
+    extra_hosts:
+      - host.docker.internal:host-gateway
+    expose:
+      - 8001
+    ports:
+      - ${PORT}:${PORT}
+    networks:
+      - main
+
+networks:
+  main:
